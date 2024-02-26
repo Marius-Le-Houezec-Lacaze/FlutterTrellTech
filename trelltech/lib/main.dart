@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:trelltech/config/routes.dart';
+import 'package:trelltech/container.dart';
 import 'package:trelltech/features/auth/presentation/pages/auth.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDependencies();
   runApp(const MyApp());
 }
 
@@ -12,7 +15,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
+      onGenerateRoute: AppRoutes.onGenerateRoutes,
       home: Auth(),
     );
   }
