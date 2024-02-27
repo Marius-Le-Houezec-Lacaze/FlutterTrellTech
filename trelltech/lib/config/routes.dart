@@ -2,10 +2,12 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trelltech/features/auth/presentation/pages/auth.dart';
 
 class AppRoutes {
-  static Route onGenerateRoutes(RouteSettings settings) {
+  static Future<Route> onGenerateRoutes(RouteSettings settings) async {
+    final prefs = await SharedPreferences.getInstance();
     switch (settings.name) {
       case '/':
         return _materialRoute( Auth());
