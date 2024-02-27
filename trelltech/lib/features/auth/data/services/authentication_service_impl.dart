@@ -12,7 +12,7 @@ class AuthenticationServiceImpl implements AuthenticationService {
     final url = Uri.https('trello.com', '/1/authorize', {
       'expiration': 'never',
       'scope': 'read,write,account',
-      'key': apiToken,
+      'key': apiKey,
       'return_url': "$callbackScheme:/",
       'response_type': 'token',
     });
