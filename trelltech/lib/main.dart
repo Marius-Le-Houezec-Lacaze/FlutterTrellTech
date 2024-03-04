@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trelltech/config/routes.dart';
 import 'package:trelltech/container.dart';
 import 'package:trelltech/core/interceptors/authentication_interceptor.dart';

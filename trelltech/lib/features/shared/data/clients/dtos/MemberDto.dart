@@ -1,5 +1,6 @@
+import 'package:json_annotation/json_annotation.dart';
 
-
+@JsonSerializable()
 class MemberDto {
 
   final String ? id;
@@ -8,7 +9,7 @@ class MemberDto {
     this.id,
   });
 
-  static fromJson(Map<String, dynamic> json) => MemberDto(
+  factory MemberDto.fromJson(Map<String, dynamic> json) => MemberDto(
     id: json['id'] ?? "",
   );
 }
