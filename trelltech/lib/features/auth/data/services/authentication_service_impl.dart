@@ -8,7 +8,7 @@ import '../../domain/services/AuthenticationServices.dart';
 class AuthenticationServiceImpl implements AuthenticationService {
 
   @override
-  Future<String> tryAuthenticateUser() async {
+  Future<String?> tryAuthenticateUser() async {
     final url = Uri.https('trello.com', '/1/authorize', {
       'expiration': 'never',
       'scope': 'read,write,account',
@@ -24,9 +24,12 @@ class AuthenticationServiceImpl implements AuthenticationService {
 
     final prefs = await SharedPreferences.getInstance();
 
-    String token = result.split('=')[1];
+    String? token = result.split('=')[1];
 
-    print(token);
+    if(token == null){
+      return null;
+    }
+
     await prefs.setString('token', token);
     return Future.value(token);
   }

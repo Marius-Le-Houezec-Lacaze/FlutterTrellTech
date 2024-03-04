@@ -16,7 +16,7 @@ class AuthenticationInterceptor implements Interceptor  {
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    print("onRequest");
+      print("onRequest");
     final prefs = await SharedPreferences.getInstance();
 
 
@@ -25,6 +25,7 @@ class AuthenticationInterceptor implements Interceptor  {
       'key' : apiKey,
     });
 
+    print(options.data);
     return handler.next(options);
   }
 
