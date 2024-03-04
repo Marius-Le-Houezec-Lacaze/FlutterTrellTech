@@ -141,6 +141,9 @@ class _OrganizationState extends State<Organization> {
                         child: Material(
                           color:Colors.amber,
                           child: InkWell(
+                            onTap: () => {
+                              Navigator.pushNamed(context, "/boards")
+                            },
                               child: Center(child: Text('Entry ${listOrg.data![index].displayName}')),
                           ),
                         )
