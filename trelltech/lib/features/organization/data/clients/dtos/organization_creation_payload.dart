@@ -4,9 +4,9 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:trelltech/features/shared/domain/entities/organization_entity.dart';
 
 @JsonSerializable()
-class OrganizationPayload  {
+class OrganizationCreationPayload  {
 
-  final String displayName;
+  String ? displayName;
 
   String ? name;
 
@@ -15,12 +15,12 @@ class OrganizationPayload  {
   String ? website;
 
 
-  OrganizationPayload(this.website, this.desc,this.name,{
-    required this.displayName,
+  OrganizationCreationPayload(this.website, this.desc,this.name,{
+     this.displayName,
   });
 
 
-  factory OrganizationPayload.FromEntity(OrganizationEntity organizationEntity) => OrganizationPayload("", "", organizationEntity.name, displayName: organizationEntity.displayName);
+  factory OrganizationCreationPayload.FromEntity(OrganizationEntity organizationEntity) => OrganizationCreationPayload("", "", organizationEntity.name, displayName: organizationEntity.displayName);
 
   Map<String, dynamic> toJson() => {
     'displayName': displayName,

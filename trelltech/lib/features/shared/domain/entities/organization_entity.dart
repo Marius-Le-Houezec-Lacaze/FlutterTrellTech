@@ -6,8 +6,8 @@ class OrganizationEntity {
 
    String ? name;
 
-   String  displayName;
+   String ? displayName;
 
-   OrganizationEntity({this.name,this.id, required this.displayName});
+   OrganizationEntity({this.name,this.id,  this.displayName});
 
 }
