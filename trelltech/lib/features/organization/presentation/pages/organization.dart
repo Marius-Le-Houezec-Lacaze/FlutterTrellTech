@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trelltech/features/organization/domain/services/organization_service.dart';
 import 'package:trelltech/features/organization/presentation/widgets/organization_form.dart';
 import 'package:trelltech/features/shared/domain/entities/organization_entity.dart';
+import 'package:trelltech/constants/TrellTechTheme.dart';
+
 
 import '../../../../container.dart';
 import '../../../shared/domain/services/member_service.dart';
@@ -139,7 +141,7 @@ class _OrganizationState extends State<Organization> {
                         height: 60,
                         duration: const Duration(seconds:2),
                         child: Material(
-                          color:Colors.amber,
+                          color:Theme.of(context).colorScheme.primary,
                           child: InkWell(
                               child: Center(child: Text('Entry ${listOrg.data![index].displayName}')),
                           ),
