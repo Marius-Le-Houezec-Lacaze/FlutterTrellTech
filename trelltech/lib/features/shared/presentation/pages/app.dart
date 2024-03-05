@@ -4,7 +4,6 @@ import 'package:trelltech/features/shared/presentation/widgets/trelltech_scaffol
 class App extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return const TrelltechScaffold();
+    return TrelltechScaffold();
   }
-
 }

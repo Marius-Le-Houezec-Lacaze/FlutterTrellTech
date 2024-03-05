@@ -4,17 +4,17 @@ import 'package:trelltech/features/shared/presentation/widgets/organization_app_
 import 'package:trelltech/features/shared/presentation/widgets/trelltech_drawer.dart';
 
 class TrelltechScaffold extends StatefulWidget{
-  const TrelltechScaffold({super.key});
+   TrelltechScaffold({super.key});
 
   @override
   State<TrelltechScaffold> createState() => _TrelltechScaffoldState();
 }
 
 class _TrelltechScaffoldState extends State<TrelltechScaffold> {
+
+  Widget page = const Organization();
   final globalKey = GlobalKey<ScaffoldState>();
-  final List<Widget> pages = [
-    const Organization()
-  ];
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -22,8 +22,13 @@ class _TrelltechScaffoldState extends State<TrelltechScaffold> {
         child: Scaffold(
       key: globalKey,
       appBar: const TrellTechAppBar(),
-      endDrawer: TrellTechDrawer(),
-      body: pages[0],
+      endDrawer: TrellTechDrawer(
+          onNavigationChange:(widget){
+        setState(() {
+          page = widget;
+        });
+      } ),
+      body: page,
     ));
 
   }

@@ -17,13 +17,6 @@ import '../../../shared/domain/services/member_service.dart';
 class Organization extends StatefulWidget {
   const Organization({super.key});
 
-
-
-  @override
-  void initState() {
-
-  }
-
   @override
   State<Organization> createState() => _OrganizationState();
 }
@@ -34,7 +27,7 @@ class _OrganizationState extends State<Organization> {
   final OrganizationService _organizationService = sl<OrganizationService>();
   final globalKey = GlobalKey<ScaffoldState>();
 
-   late Future<List<OrganizationEntity>> _organizations ;
+  Future<List<OrganizationEntity>> ? _organizations;
 
   @override
   void initState() {
@@ -47,8 +40,6 @@ class _OrganizationState extends State<Organization> {
     setState(() {
       _organizations = _memberService.getOrganizationByUserId(prefs.getString("userId")!);
     });
-
-    // return _memberService.getOrganizationByUserId(prefs.getString("userId")!);
   }
 
   

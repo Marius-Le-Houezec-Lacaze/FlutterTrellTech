@@ -1,19 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trelltech/features/boards/presentation/pages/boards.dart';
 import 'package:trelltech/features/organization/presentation/pages/organization.dart';
 import 'package:trelltech/features/shared/domain/entities/list_burger_menu.dart';
 
-class TrellTechDrawer extends StatelessWidget{
-  TrellTechDrawer({super.key});
+class TrellTechDrawer extends StatefulWidget{
 
+  final Function(Widget) onNavigationChange;
+
+  TrellTechDrawer({required this.onNavigationChange,super.key});
+
+  @override
+  State<TrellTechDrawer> createState() => _TrellTechDrawerState();
+}
+
+class _TrellTechDrawerState extends State<TrellTechDrawer> {
+
+  var selectedIndex = 0;
   final pages = [
-    ListBurgerMenu("Workspaces", const Organization())
+    ListBurgerMenu("Workspaces", const Organization(), true),
+    ListBurgerMenu("Boards", const Boards(), false)
   ];
 
   List<Widget> _buildListTile(){
-    return pages.map((e) => ListTile(
-      title: Text(e.title),
-    )).toList();
+    return pages.map((e) {
+      var id = pages.indexOf(e);
+      return ListTile(
+        title: Text(e.title),
+        onTap: ()  {
+          widget.onNavigationChange(e.pages);
+          setState(() {
+            selectedIndex = id;
+          });
+        },
+        selected: (selectedIndex == id),
+      );
+    }).toList();
   }
 
   @override
@@ -21,12 +43,11 @@ class TrellTechDrawer extends StatelessWidget{
     return Drawer(
       child: ListView(
         children:  [
-          DrawerHeader(child: Text("TrellTech"),
+          const DrawerHeader(child: Text("TrellTech"),
           ),
           ..._buildListTile()
         ],
       ),
     );
   }
-
 }
