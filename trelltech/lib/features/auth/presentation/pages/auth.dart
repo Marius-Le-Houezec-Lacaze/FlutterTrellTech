@@ -22,7 +22,7 @@ class Auth extends StatelessWidget {
 
        await prefs.setString('userId', user.id!);
 
-       Navigator.pushNamed(context, "/organization");
+       Navigator.pushNamed(context, "/app");
      }
    }
   @override

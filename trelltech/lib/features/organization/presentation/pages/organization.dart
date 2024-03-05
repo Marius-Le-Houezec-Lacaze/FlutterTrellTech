@@ -1,12 +1,15 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trelltech/features/organization/domain/services/organization_service.dart';
+import 'package:trelltech/features/shared/presentation/widgets/organization_app_bar.dart';
 import 'package:trelltech/features/organization/presentation/widgets/organization_form.dart';
 import 'package:trelltech/features/shared/domain/entities/organization_entity.dart';
+import 'package:trelltech/features/shared/presentation/widgets/trelltech_drawer.dart';
 
 import '../../../../container.dart';
 import '../../../shared/domain/services/member_service.dart';
@@ -73,12 +76,16 @@ class _OrganizationState extends State<Organization> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        key: globalKey,
-        floatingActionButton: _buildFloatingButton(context),
-        body: Center(
-          child: _buildList(),
+    return Stack(
+      children: [
+        _buildList(),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(padding: const EdgeInsets.all(16),
+            child: _buildFloatingButton(context)
+          ),
         )
+      ],
     );
   }
 
