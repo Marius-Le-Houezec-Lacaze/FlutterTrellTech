@@ -17,11 +17,14 @@ class _TrelltechScaffoldState extends State<TrelltechScaffold> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+        canPop: false,
+        child: Scaffold(
       key: globalKey,
       appBar: const TrellTechAppBar(),
-      endDrawer: const TrellTechDrawer(),
+      endDrawer: TrellTechDrawer(),
       body: pages[0],
-    );
+    ));
+
   }
 }
