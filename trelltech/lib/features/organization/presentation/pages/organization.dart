@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trelltech/features/organization/domain/arguments/organization_arguments.dart';
 import 'package:trelltech/features/organization/domain/services/organization_service.dart';
 import 'package:trelltech/features/shared/presentation/widgets/organization_app_bar.dart';
 import 'package:trelltech/features/organization/presentation/widgets/organization_form.dart';
@@ -139,8 +140,9 @@ class _OrganizationState extends State<Organization> {
                         child: Material(
                           color:Colors.amber,
                           child: InkWell(
-                            onTap: () => {
-                              Navigator.pushNamed(context, "/boards")
+                            onTap: (){
+                              print(listOrg.data![index].id!);
+                              Navigator.pushNamed(context, "/boards", arguments: OrganizationArguments(listOrg.data![index].id!));
                             },
                               child: Center(child: Text('Entry ${listOrg.data![index].displayName}')),
                           ),

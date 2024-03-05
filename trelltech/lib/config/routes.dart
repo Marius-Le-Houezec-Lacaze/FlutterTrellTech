@@ -11,6 +11,8 @@ class AppRoutes {
         return _materialRoute(Auth());
       case '/app':
         return _materialRoute(App());
+        case '/boards':
+        // return _materialRoute(const Boards());
       default:
         return _materialRoute(Auth());
     }

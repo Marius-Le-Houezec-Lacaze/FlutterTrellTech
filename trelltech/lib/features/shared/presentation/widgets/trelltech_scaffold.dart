@@ -3,14 +3,14 @@ import 'package:trelltech/features/organization/presentation/pages/organization.
 import 'package:trelltech/features/shared/presentation/widgets/organization_app_bar.dart';
 import 'package:trelltech/features/shared/presentation/widgets/trelltech_drawer.dart';
 
-class TrelltechScaffold extends StatefulWidget{
-   TrelltechScaffold({super.key});
+class TrellTechScaffold extends StatefulWidget{
+   TrellTechScaffold({super.key});
 
   @override
-  State<TrelltechScaffold> createState() => _TrelltechScaffoldState();
+  State<TrellTechScaffold> createState() => _TrellTechScaffoldState();
 }
 
-class _TrelltechScaffoldState extends State<TrelltechScaffold> {
+class _TrellTechScaffoldState extends State<TrellTechScaffold> {
 
   Widget page = const Organization();
   final globalKey = GlobalKey<ScaffoldState>();

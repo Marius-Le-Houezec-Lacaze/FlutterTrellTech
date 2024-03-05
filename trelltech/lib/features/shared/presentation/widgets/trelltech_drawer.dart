@@ -19,7 +19,6 @@ class _TrellTechDrawerState extends State<TrellTechDrawer> {
   var selectedIndex = 0;
   final pages = [
     ListBurgerMenu("Workspaces", const Organization(), true),
-    ListBurgerMenu("Boards", const Boards(), false)
   ];
 
   List<Widget> _buildListTile(){
