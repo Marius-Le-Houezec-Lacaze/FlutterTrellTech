@@ -6,6 +6,10 @@ import 'package:trelltech/constants/TrellTechTheme.dart';
 import 'package:trelltech/container.dart';
 import 'package:trelltech/core/interceptors/authentication_interceptor.dart';
 import 'package:trelltech/features/auth/presentation/pages/auth.dart';
+import 'package:trelltech/features/boards/presentation/pages/boards.dart';
+import 'package:trelltech/features/organization/presentation/pages/organization.dart';
+import 'package:trelltech/features/shared/presentation/pages/app.dart';
+import 'features/organization/domain/arguments/organization_arguments.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trelltech/theme/theme.dart';
 import 'package:trelltech/theme/themeManager.dart';
@@ -24,7 +28,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-      onGenerateRoute: AppRoutes.onGenerateRoutes,
+      routes: {
+        // '/': (context)=> Auth(),
+        '/boards': (context) => Boards(ModalRoute.of(context)
+            ?.settings
+            .arguments as OrganizationArguments),
+        '/organization': (context) => const Organization(),
+        '/app': (context) => App(),
+      },
       home: Auth(),
       theme: lightTheme,
       darkTheme: darkTheme,
