@@ -1,0 +1,34 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build and Push
+    steps:
+      - name: git-checkout
+        uses: actions/checkout@v2
+      
+      - name: dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Install dependency
+        run: dart pub get
+        working-directory: ./trelltech
+
+      - name: Generate doc
+        run: dart doc .
+        working-directory: ./trelltech
+
+    
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: documentation # The branch name where you want to push the assets
+          FOLDER: trelltech/doc # The directory where your assets are generated
+          MESSAGE: "Build: ({sha}) {msg}" # The commit message
