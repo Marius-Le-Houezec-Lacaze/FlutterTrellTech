@@ -46,6 +46,7 @@ dependencies:
   go_router: ^13.2.0
   flutter_slidable: ^3.0.1
   result_dart: ^1.1.0
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   retrofit_generator: '>=7.0.0 <8.0.0'
