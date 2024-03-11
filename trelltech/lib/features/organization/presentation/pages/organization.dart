@@ -7,6 +7,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trelltech/features/organization/domain/arguments/organization_arguments.dart';
 import 'package:trelltech/features/organization/domain/services/organization_service.dart';
+import 'package:trelltech/features/organization/presentation/widgets/organization_list_element.dart';
 import 'package:trelltech/features/shared/presentation/widgets/organization_app_bar.dart';
 import 'package:trelltech/features/organization/presentation/widgets/organization_form.dart';
 import 'package:trelltech/features/shared/domain/entities/organization_entity.dart';
@@ -94,62 +95,12 @@ class _OrganizationState extends State<Organization> {
                 padding: const EdgeInsets.all(8),
                 itemCount: listOrg.data!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return  _buildListElement(listOrg, index);
+                  return  OrganizationListElement(listOrg.data![index],_getOrganizations,_showBottomSheet);
                 }
             );
           // }
         });
   }
 
-  Slidable _buildListElement(AsyncSnapshot<List<OrganizationEntity>> listOrg, int index) {
-    return Slidable(
-                      direction: Axis.horizontal,
-                      endActionPane:  ActionPane(
 
-                        motion: const ScrollMotion(),
-                        children: [
-                          SlidableAction(
-                            onPressed: (BuildContext context) async {
-                              var result = await _organizationService.deleteOrganization(listOrg.data![index].id!);
-                              print(result);
-                                if(result.isSuccess()){
-                                  _getOrganizations();
-                                }
-                              },
-                            backgroundColor: const Color(0xFFFE4A49),
-                            foregroundColor: Colors.white,
-                            icon: Icons.delete,
-                            label: 'Delete',
-                          ),
-                          SlidableAction(
-                            onPressed: (BuildContext context){
-                              _showBottomSheet(listOrg.data![index], (organizationEntity) async {
-                                await _organizationService.updateOrganization(organizationEntity);
-                                _getOrganizations();
-                              });
-                            },
-                            backgroundColor: const Color(0xFF21B7CA),
-                            foregroundColor: Colors.white,
-                            icon: Icons.edit,
-
-                            label: 'Edit',
-                          ),
-                        ],
-                      ),
-                      child: AnimatedContainer(
-                        height: 60,
-                        duration: const Duration(seconds:2),
-                        child: Material(
-                          color:Theme.of(context).colorScheme.primary,
-                          child: InkWell(
-                            onTap: (){
-                              print(listOrg.data![index].id!);
-                              Navigator.pushNamed(context, "/boards", arguments: OrganizationArguments(listOrg.data![index].id!));
-                            },
-                              child: Center(child: Text('Entry ${listOrg.data![index].displayName}')),
-                          ),
-                        )
-                      )
-                  );
-  }
 }

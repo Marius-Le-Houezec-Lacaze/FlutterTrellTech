@@ -13,11 +13,11 @@ class BoardServiceImpl implements BoardService {
   @override
   Future<List<BoardEntity>> getBoardByOrganizationId(String organizationId) async {
     var response = await client.getBoardByOrganizationId(organizationId);
-
     if(response.isError()){
       throw Error();
     }
 
+    print(response.toString());
     var result = response.getOrThrow();
 
     return result.map((e) => BoardEntity(

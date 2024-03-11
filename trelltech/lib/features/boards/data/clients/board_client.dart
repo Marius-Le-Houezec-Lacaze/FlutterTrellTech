@@ -15,7 +15,7 @@ class BoardsClient {
       String organizationId
       ) async {
     try{
-      final result = await _dio.get<List<Map<String, dynamic>>>("${url}organization/$organizationId/boards");
+      final result = await _dio.get<List<dynamic>>("${url}organizations/$organizationId/boards");
 
       if(result.data == null){
         return Failure(DioException(requestOptions: result.requestOptions));
@@ -49,6 +49,11 @@ class BoardsClient {
     final result = await _dio.post("${url}boards", data: payload.toJson());
 
     return BoardDto.fromJson(result.data);
+  }
+
+  Future<Result<BoardDto, DioException>> getBoardById(string boardId){
+    var uri = Uri.
+    // final result await _dio.get()
   }
 
 }
