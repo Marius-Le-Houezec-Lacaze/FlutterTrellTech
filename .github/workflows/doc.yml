@@ -3,28 +3,30 @@ name: Documentation
 on:
   push:
     branches:
-      - master
+      -  main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build and Push
+    name: Generate doc
     steps:
       - name: git-checkout
         uses: actions/checkout@v2
       
       - name: dart
-        uses: dart-lang/setup-dart@v1
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.1'
+          channel: 'stable'
 
-      - name: Install dependency
-        run: dart pub get
+      - name: Install deps
+        run: flutter pub get
         working-directory: ./trelltech
 
       - name: Generate doc
         run: dart doc .
         working-directory: ./trelltech
 
-    
       - name: Push
         uses: s0/git-publish-subdir-action@develop
         env:
