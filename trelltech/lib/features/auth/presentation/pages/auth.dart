@@ -6,6 +6,7 @@ import 'package:trelltech/config/constant.dart';
 import 'package:trelltech/container.dart';
 import 'package:trelltech/features/auth/domain/services/AuthenticationServices.dart';
 import 'package:trelltech/features/shared/domain/services/member_service.dart';
+import 'package:trelltech/theme/theme.dart';
 
 class Auth extends StatelessWidget {
   Auth({super.key});
@@ -28,9 +29,13 @@ class Auth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body: Center(
-        child: TextButton( onPressed: () =>authUser(context),child: const Text("Authenticate with trello")),
+        body: Center(
+        child: TextButton( onPressed: () =>authUser(context),child: const Text("Authenticate with trello"),
+          style: TextButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: lightTheme.primaryColor ,
+          padding: const EdgeInsets.all(16.0),
       )
-    );
+    )));
   }
 }
