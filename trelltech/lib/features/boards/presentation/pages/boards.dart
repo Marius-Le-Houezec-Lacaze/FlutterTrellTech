@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trelltech/container.dart';
 import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
 import 'package:trelltech/features/boards/domain/services/board_service.dart';
+import 'package:trelltech/features/boards/presentation/widget/board_form.dart';
 import 'package:trelltech/features/boards/presentation/widget/board_list_element.dart';
 import 'package:trelltech/features/organization/domain/arguments/organization_arguments.dart';
 
@@ -29,13 +30,14 @@ class _BoardsState extends State<Boards> {
 
   void _getBoards() async {
     setState(() {
-      _boards = _boardService.getBoardByOrganizationId(widget.arguments.organizationId);;
+      _boards = _boardService.getBoardByOrganizationIdAsync(widget.arguments.organizationId);;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: _buildFloatingButton(context),
       body: FutureBuilder(future: _boards, builder: (BuildContext context, AsyncSnapshot<List<BoardEntity>> listBoard) {
         if (!listBoard.hasData) {
           return const Text('Loading...');
@@ -51,5 +53,28 @@ class _BoardsState extends State<Boards> {
       }
     ),
     );
+  }
+
+  Widget _buildFloatingButton(BuildContext context){
+    return FloatingActionButton(onPressed: ()=> _showBottomSheet(BoardEntity(), (organizationEntity) async {
+      organizationEntity.idOrganization = widget.arguments.organizationId;
+
+      await _boardService.createBoardAsync(organizationEntity);
+      _getBoards();
+    }));
+  }
+
+  _showBottomSheet(BoardEntity organizationEntity, Function(BoardEntity) onSubmitAction) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext context){
+          return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: BoardForm(board: organizationEntity, onSubmitAction: onSubmitAction),
+              ));
+    });
   }
 }
