@@ -2,9 +2,15 @@
 
 class BoardEntity {
 
-  final String ? id;
-  final String ? name;
-  final String ? description;
+  String ? id;
 
-  BoardEntity(this.name, this.description, {required this.id});
+  String ? name;
+
+  String ? description;
+
+  String ? idBoardSource;
+
+  String ? idOrganization;
+
+  BoardEntity({this.name, this.description, this.id, this.idBoardSource, this.idOrganization});
 }

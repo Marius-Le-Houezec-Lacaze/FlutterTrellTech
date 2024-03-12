@@ -1,3 +1,5 @@
+import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
+
 class BoardCreationPayload {
   final String name;
   String idBoardSource;
@@ -10,4 +12,6 @@ class BoardCreationPayload {
     'idBoardSource': idBoardSource,
     'idOrganization': idOrganization
   };
+
+  factory BoardCreationPayload.fromEntity(BoardEntity boardEntity) => BoardCreationPayload(boardEntity.idBoardSource!, boardEntity.idOrganization!, boardEntity.name!);
 }
