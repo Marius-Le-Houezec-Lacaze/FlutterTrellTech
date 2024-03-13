@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:trelltech/container.dart';
 import 'package:trelltech/features/boards/domain/arguments/board_show_argument.dart';
 import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
+import 'package:trelltech/features/boards/domain/entities/list_entity.dart';
 import 'package:trelltech/features/boards/domain/services/board_service.dart';
 import 'package:trelltech/features/boards/presentation/widget/board_card.dart';
 
@@ -34,39 +35,33 @@ class _BoardShowState extends State<BoardShow> {
   late Future<BoardEntity> board;
   late AppFlowyBoardScrollController scrollCrontroller;
 
+  late List<ListEntity> lists;
+
   @override
   void initState() {
     scrollCrontroller = AppFlowyBoardScrollController();
     _getBoard();
-    final column = AppFlowyGroupData(
-      id: "1",
-      name: "1",
-      items: [
-        BoardCard("a"),
-        BoardCard("b"),
-        BoardCard("c"),
-        BoardCard("d"),
-      ],
-    );    final column2 = AppFlowyGroupData(
-      id: "2",
-      name: "2",
-      items: [
-        BoardCard("e"),
-        BoardCard("f"),
-        BoardCard("g"),
-      ],
-    );
 
-    boardController.addGroup(column);
-    boardController.addGroup(column2);
-    super.initState();
+
+
     super.initState();
   }
 
-  _getBoard() {
-    setState(() {
+  _getBoard()async {
+    var result = await boardService.
+    getListsByBoardId(widget.argument.boardId);
+    setState(()  {
       board = boardService.getBoardByIdAsync(widget.argument.boardId);
+      lists = result;
     });
+
+    for (var element in result) {
+      final groupData = AppFlowyGroupData(id: element.name!, items: [
+        BoardCard("Card 3"),
+        BoardCard("Card 4"),
+      ], name: element.name!);
+      boardController.addGroup(groupData);
+    }
   }
 
   @override

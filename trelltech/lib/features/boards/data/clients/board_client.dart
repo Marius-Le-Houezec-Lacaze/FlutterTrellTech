@@ -3,6 +3,8 @@ import 'package:result_dart/result_dart.dart';
 import 'package:trelltech/config/constant.dart';
 import 'package:trelltech/features/boards/data/clients/dtos/board_creation_payload.dart';
 import 'package:trelltech/features/boards/data/clients/dtos/board_dto.dart';
+import 'package:trelltech/features/boards/data/clients/dtos/list_dto.dart';
+
 
 class BoardsClient {
 
@@ -59,6 +61,16 @@ class BoardsClient {
       final result = await _dio.get('$url/boards/$boardId?lists=all');
 
       return Success (BoardDto.fromJson(result.data));
+    } on DioException catch (e){
+      return Failure(e);
+    }
+  }
+
+  Future<Result<List<ListDto>, DioException>> getListsByBoardId (String boardId) async {
+    try {
+      final result = await _dio.get<List<dynamic>>('$url/boards/$boardId/lists');
+
+      return Success(result.data!.map<ListDto>((e) => ListDto.fromJson(e)).toList());
     } on DioException catch (e){
       return Failure(e);
     }

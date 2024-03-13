@@ -3,6 +3,7 @@
 import 'package:trelltech/features/boards/data/clients/board_client.dart';
 import 'package:trelltech/features/boards/data/clients/dtos/board_creation_payload.dart';
 import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
+import 'package:trelltech/features/boards/domain/entities/list_entity.dart';
 import 'package:trelltech/features/boards/domain/services/board_service.dart';
 
 class BoardServiceImpl implements BoardService {
@@ -79,4 +80,18 @@ class BoardServiceImpl implements BoardService {
       idOrganization: result.idOrganization,
     );
   }
+
+  @override
+  Future<List<ListEntity>> getListsByBoardId(String boardId) async {
+    var response = await client.getListsByBoardId(boardId);
+
+    var result = response.getOrThrow();
+
+    return result.map<ListEntity>((e) => ListEntity(
+      name: e.name,
+      id: e.id,
+      idBoard: e.idBoard,
+    )).toList();
+  }
+
 }
