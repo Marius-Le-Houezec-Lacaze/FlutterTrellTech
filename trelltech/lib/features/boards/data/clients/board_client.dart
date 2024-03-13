@@ -54,10 +54,15 @@ class BoardsClient {
     }
   }
 
-  // Future<Result<BoardDto, DioException>> getBoardById(string boardId){
-  //   // var uri = Uri.
-  //   // final result await _dio.get()
-  // }
+  Future<Result<BoardDto, DioException>> getBoardById (String boardId) async {
+    try {
+      final result = await _dio.get('$url/boards/$boardId?lists=all');
+
+      return BoardDto.fromJson(result.data);
+    } on DioException catch (e){
+      return Failure(e);
+    }
+  }
 
 }
 

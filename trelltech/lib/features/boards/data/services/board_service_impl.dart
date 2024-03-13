@@ -61,4 +61,22 @@ class BoardServiceImpl implements BoardService {
       idOrganization: result.idOrganization,
     );
   }
+
+  @override
+  Future<BoardEntity> getBoardByIdAsync(String boardId) async {
+    var response = await client.getBoardById(boardId);
+
+    if(response.isError()){
+      throw Error();
+    }
+    var result = response.getOrThrow();
+
+    return BoardEntity(
+      name: result.name,
+      id: result.id,
+      description: result.description,
+      idBoardSource: result.idBoardSource,
+      idOrganization: result.idOrganization,
+    );
+  }
 }

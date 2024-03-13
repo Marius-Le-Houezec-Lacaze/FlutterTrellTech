@@ -5,4 +5,5 @@ abstract class BoardService {
   Future<List<BoardEntity>> getBoardByOrganizationIdAsync(String organizationId);
   Future<List<BoardEntity>> getBoardTemplateAsync();
   Future<BoardEntity> createBoardAsync(BoardEntity boardEntity);
+  Future<BoardEntity> getBoardByIdAsync(String boardId);
 }
