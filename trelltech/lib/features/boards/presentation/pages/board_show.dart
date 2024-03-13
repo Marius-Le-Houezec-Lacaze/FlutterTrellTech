@@ -6,6 +6,7 @@ import 'package:trelltech/container.dart';
 import 'package:trelltech/features/boards/domain/arguments/board_show_argument.dart';
 import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
 import 'package:trelltech/features/boards/domain/services/board_service.dart';
+import 'package:trelltech/features/boards/presentation/widget/board_card.dart';
 
 class BoardShow extends StatefulWidget{
   final BoardShowArgument argument;
@@ -18,14 +19,47 @@ class BoardShow extends StatefulWidget{
 class _BoardShowState extends State<BoardShow> {
   final BoardService boardService = sl<BoardService>();
 
-  final AppFlowyBoardController _appFlowyBoardController = AppFlowyBoardController();
+  final AppFlowyBoardController boardController = AppFlowyBoardController(
+    onMoveGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
+      debugPrint('Move item from $fromIndex to $toIndex');
+    },
+    onMoveGroupItem: (groupId, fromIndex, toIndex) {
+      debugPrint('Move $groupId:$fromIndex to $groupId:$toIndex');
+    },
+    onMoveGroupItemToGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
+      debugPrint('Move $fromGroupId:$fromIndex to $toGroupId:$toIndex');
+    },
+  );
 
   late Future<BoardEntity> board;
+  late AppFlowyBoardScrollController scrollCrontroller;
 
   @override
   void initState() {
+    scrollCrontroller = AppFlowyBoardScrollController();
     _getBoard();
-    // TODO: implement initState
+    final column = AppFlowyGroupData(
+      id: "1",
+      name: "1",
+      items: [
+        BoardCard("a"),
+        BoardCard("b"),
+        BoardCard("c"),
+        BoardCard("d"),
+      ],
+    );    final column2 = AppFlowyGroupData(
+      id: "2",
+      name: "2",
+      items: [
+        BoardCard("e"),
+        BoardCard("f"),
+        BoardCard("g"),
+      ],
+    );
+
+    boardController.addGroup(column);
+    boardController.addGroup(column2);
+    super.initState();
     super.initState();
   }
 
@@ -37,8 +71,21 @@ class _BoardShowState extends State<BoardShow> {
 
   @override
   Widget build(BuildContext context) {
-    return AppFlowyBoard(controller: _appFlowyBoardController, cardBuilder: (context, groupData, item) {
-      return AppFlowyGroupCard();
-    },);
+    final config = AppFlowyBoardConfig(
+      groupBackgroundColor: Colors.deepOrangeAccent,
+      stretchGroupHeight: false,
+    );
+
+    return AppFlowyBoard(controller: boardController,
+        boardScrollController: scrollCrontroller,
+        groupConstraints: const BoxConstraints.tightFor(width: 240),
+        config: config,
+        cardBuilder: (context, groupData, item) {
+      return AppFlowyGroupCard(
+        key: ValueKey(item.id),
+        child:    RowWidget(
+      item: item as BoardCard, key: ObjectKey(item)),
+    );
+  });
   }
 }

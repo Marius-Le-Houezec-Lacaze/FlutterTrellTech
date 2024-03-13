@@ -58,7 +58,7 @@ class BoardsClient {
     try {
       final result = await _dio.get('$url/boards/$boardId?lists=all');
 
-      return BoardDto.fromJson(result.data);
+      return Success (BoardDto.fromJson(result.data));
     } on DioException catch (e){
       return Failure(e);
     }

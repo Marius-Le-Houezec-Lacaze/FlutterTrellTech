@@ -1,9 +1,9 @@
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:flutter/material.dart';
 
-class _RowWidget extends StatelessWidget {
+class RowWidget extends StatelessWidget {
   final BoardCard item;
-  const _RowWidget({Key? key, required this.item}) : super(key: key);
+  const RowWidget({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
