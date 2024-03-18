@@ -47,6 +47,7 @@ dependencies:
   flutter_slidable: ^3.0.1
   result_dart: ^1.1.0
   google_fonts: ^6.2.1
+  appflowy_board: ^0.1.1
 
 dev_dependencies:
   retrofit_generator: '>=7.0.0 <8.0.0'

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:trelltech/features/boards/domain/arguments/board_show_argument.dart';
 import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
 
 class BoardListElement extends StatelessWidget{
@@ -27,7 +28,7 @@ class BoardListElement extends StatelessWidget{
               color:Theme.of(context).colorScheme.primary,
               child: InkWell(
                 onTap: (){
-                  // Navigator.pushNamed(context, "/boards", arguments: OrganizationArguments(organizationEntity.id!));
+                  Navigator.pushNamed(context, "/boardshow", arguments: BoardShowArgument(boardEntity.id!));
                 },
                 child: Center(child: Text('Entry ${boardEntity.name}')),
               ),

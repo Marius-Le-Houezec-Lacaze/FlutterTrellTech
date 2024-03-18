@@ -6,6 +6,8 @@ import 'package:trelltech/constants/TrellTechTheme.dart';
 import 'package:trelltech/container.dart';
 import 'package:trelltech/core/interceptors/authentication_interceptor.dart';
 import 'package:trelltech/features/auth/presentation/pages/auth.dart';
+import 'package:trelltech/features/boards/domain/arguments/board_show_argument.dart';
+import 'package:trelltech/features/boards/presentation/pages/board_show.dart';
 import 'package:trelltech/features/boards/presentation/pages/boards.dart';
 import 'package:trelltech/features/organization/presentation/pages/organization.dart';
 import 'package:trelltech/features/shared/presentation/pages/app.dart';
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/boards': (context) => Boards(ModalRoute.of(context)
             ?.settings
             .arguments as OrganizationArguments),
+        '/boardshow': (context) => BoardShow(ModalRoute.of(context)?.settings.arguments as BoardShowArgument),
         '/organization': (context) => const Organization(),
         '/app': (context) => App(),
       },
