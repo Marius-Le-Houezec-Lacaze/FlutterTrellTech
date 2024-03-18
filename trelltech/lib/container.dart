@@ -10,8 +10,11 @@ import 'package:trelltech/features/boards/domain/services/board_service.dart';
 import 'package:trelltech/features/organization/data/clients/organization_client.dart';
 import 'package:trelltech/features/organization/data/services/organization_service_impl.dart';
 import 'package:trelltech/features/organization/domain/services/organization_service.dart';
+import 'package:trelltech/features/shared/data/clients/card_client.dart';
 import 'package:trelltech/features/shared/data/clients/member_client.dart';
-import 'package:trelltech/features/shared/data/services/member_service_impl.dart';
+import 'package:trelltech/features/shared/data/services_implementation/card_service_impl.dart';
+import 'package:trelltech/features/shared/data/services_implementation/member_service_impl.dart';
+import 'package:trelltech/features/shared/domain/services/card_service.dart';
 import 'package:trelltech/features/shared/domain/services/member_service.dart';
 
 import 'core/interceptors/authentication_interceptor.dart';
@@ -26,7 +29,7 @@ Future<void> initializeDependencies() async {
 
   //clients
   InjectClients();
-  //services
+  //services_implementation
   InjectServices();
 }
 
@@ -43,13 +46,19 @@ void InjectServices() {
       OrganizationServiceImpl(sl())
   );
 
-  sl.registerSingleton<BoardService>(
-      BoardServiceImpl(sl())
+  sl.registerSingleton<CardService>(
+      CardServiceImpl(sl())
   );
+
+  sl.registerSingleton<BoardService>(
+      BoardServiceImpl(sl(),sl())
+  );
+
 }
 
 Future<void> InjectClients() async {
   sl.registerSingleton<MemberClient>(MemberClient(sl()));
   sl.registerSingleton<OrganizationClient>(OrganizationClient(sl()));
   sl.registerSingleton<BoardsClient>(BoardsClient(sl()));
+  sl.registerSingleton<CardClient>(CardClient(sl()));
 }

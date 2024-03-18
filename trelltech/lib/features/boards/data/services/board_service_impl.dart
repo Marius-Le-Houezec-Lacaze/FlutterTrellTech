@@ -3,18 +3,23 @@
 import 'package:trelltech/features/boards/data/clients/board_client.dart';
 import 'package:trelltech/features/boards/data/clients/dtos/board_creation_payload.dart';
 import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
+import 'package:trelltech/features/boards/domain/entities/complete_board.dart';
+import 'package:trelltech/features/boards/domain/entities/complete_list.dart';
 import 'package:trelltech/features/boards/domain/entities/list_entity.dart';
 import 'package:trelltech/features/boards/domain/services/board_service.dart';
+import 'package:trelltech/features/shared/data/clients/card_client.dart';
+import 'package:trelltech/features/shared/domain/services/card_service.dart';
 
 class BoardServiceImpl implements BoardService {
 
-  final BoardsClient client;
+  final BoardsClient _boardClient;
+  final CardService _cardService;
 
-  BoardServiceImpl(this.client);
+  BoardServiceImpl(this._boardClient, this._cardService);
 
   @override
   Future<List<BoardEntity>> getBoardByOrganizationIdAsync(String organizationId) async {
-    var response = await client.getBoardByOrganizationId(organizationId);
+    var response = await _boardClient.getBoardByOrganizationId(organizationId);
     if(response.isError()){
       throw Error();
     }
@@ -31,7 +36,7 @@ class BoardServiceImpl implements BoardService {
 
   @override
   Future<List<BoardEntity>> getBoardTemplateAsync() async {
-    var response = await client.getBoardsTemplate();
+    var response = await _boardClient.getBoardsTemplate();
     if(response.isError()){
       throw Error();
     }
@@ -47,7 +52,7 @@ class BoardServiceImpl implements BoardService {
 
   @override
   Future<BoardEntity> createBoardAsync(BoardEntity boardEntity) async {
-    var response = await client.createBoard(BoardCreationPayload.fromEntity(boardEntity));
+    var response = await _boardClient.createBoard(BoardCreationPayload.fromEntity(boardEntity));
 
     if(response.isError()){
       throw Error();
@@ -65,7 +70,7 @@ class BoardServiceImpl implements BoardService {
 
   @override
   Future<BoardEntity> getBoardByIdAsync(String boardId) async {
-    var response = await client.getBoardById(boardId);
+    var response = await _boardClient.getBoardById(boardId);
 
     if(response.isError()){
       throw Error();
@@ -83,7 +88,7 @@ class BoardServiceImpl implements BoardService {
 
   @override
   Future<List<ListEntity>> getListsByBoardId(String boardId) async {
-    var response = await client.getListsByBoardId(boardId);
+    var response = await _boardClient.getListsByBoardId(boardId);
 
     var result = response.getOrThrow();
 
@@ -92,6 +97,20 @@ class BoardServiceImpl implements BoardService {
       id: e.id,
       idBoard: e.idBoard,
     )).toList();
+  }
+
+  @override
+  Future<CompleteBoardEntity> getCompleteBoardById(String boardId) async {
+    var lists = await getListsByBoardId(boardId);
+    var board = await getBoardByIdAsync(boardId);
+    var cards = await Future.wait (lists.map((list) async => CompleteListEntity(
+      idBoard: list.idBoard,
+      id: list.id,
+      name: list.name,
+      cards: await _cardService.getCardByListId(list.id!),
+    )).toList());
+
+    return CompleteBoardEntity.fromBoardEntity(board, cards);
   }
 
 }

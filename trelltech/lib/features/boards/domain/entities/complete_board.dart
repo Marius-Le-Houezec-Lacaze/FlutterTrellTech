@@ -1,21 +1,35 @@
+import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
+import 'package:trelltech/features/boards/domain/entities/complete_list.dart';
 
+class CompleteBoardEntity {
+  String? id;
 
-import 'package:trelltech/features/boards/domain/entities/list_entity.dart';
+  String? name;
 
-class BoardEntity {
+  String? description;
 
-  String ? id;
+  String? idBoardSource;
 
-  String ? name;
+  String? idOrganization;
 
-  String ? description;
+  List<CompleteListEntity>? lists;
 
-  String ? idBoardSource;
+  CompleteBoardEntity(
+      {this.name,
+      this.description,
+      this.id,
+      this.idBoardSource,
+      this.idOrganization,
+      this.lists});
 
-  String ? idOrganization;
-
-  List<ListEntity> ? lists;
-
-
-  BoardEntity({this.name, this.description, this.id, this.idBoardSource, this.idOrganization});
+  factory CompleteBoardEntity.fromBoardEntity(
+          BoardEntity boardEntity, List<CompleteListEntity> lists) =>
+      CompleteBoardEntity(
+        description: boardEntity.description,
+        name: boardEntity.name,
+        id: boardEntity.id,
+        idBoardSource: boardEntity.idBoardSource,
+        idOrganization: boardEntity.idOrganization,
+        lists: lists,
+      );
 }

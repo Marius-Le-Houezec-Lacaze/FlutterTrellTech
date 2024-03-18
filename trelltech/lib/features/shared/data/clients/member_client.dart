@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:trelltech/config/constant.dart';
 import 'package:trelltech/features/organization/data/clients/dtos/organization_dto.dart';
-import 'dtos/MemberDto.dart';
+import 'dtos/member_dto.dart';
 
 part 'member_client.g.dart';
 
