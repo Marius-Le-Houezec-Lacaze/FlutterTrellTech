@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:flutter/material.dart';
 import 'package:trelltech/container.dart';
@@ -6,6 +8,7 @@ import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
 import 'package:trelltech/features/boards/domain/entities/complete_board.dart';
 import 'package:trelltech/features/boards/domain/entities/list_entity.dart';
 import 'package:trelltech/features/boards/domain/services/board_service.dart';
+import 'package:trelltech/features/boards/presentation/pages/boards.dart';
 import 'package:trelltech/features/boards/presentation/widget/board_card.dart';
 
 class BoardShow extends StatefulWidget {
@@ -67,21 +70,35 @@ class _BoardShowState extends State<BoardShow> {
       stretchGroupHeight: false,
     );
 
-    return AppFlowyBoard(
-        controller: boardController,
-        background: Image.network(
-          board.backgroundImage!,
-          fit: BoxFit.fill,
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            board.name!,
+            style: TextStyle(color: Colors.white70),
+          ),
+          backgroundColor: Colors.black87,
         ),
-        boardScrollController: scrollCrontroller,
-        groupConstraints: const BoxConstraints.tightFor(width: 240),
-        config: config,
-        cardBuilder: (context, groupData, item) {
-          return AppFlowyGroupCard(
-            decoration: BoxDecoration(color: Colors.transparent),
-            key: ValueKey(item.id),
-            child: RowWidget(item: item as BoardCard, key: ObjectKey(item)),
-          );
-        });
+        body: Container(
+            padding: EdgeInsets.fromLTRB(0, 16, 0, 10),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      board.backgroundImage!,
+                    ))),
+            child: AppFlowyBoard(
+                controller: boardController,
+                boardScrollController: scrollCrontroller,
+                groupConstraints: const BoxConstraints.tightFor(width: 340),
+
+                config: config,
+                cardBuilder: (context, groupData, item) {
+                  return AppFlowyGroupCard(
+                    decoration: BoxDecoration(color: Colors.transparent),
+                    key: ValueKey(item.id),
+                    child: RowWidget(
+                        item: item as BoardCard, key: ObjectKey(item)),
+                  );
+                })));
   }
 }
