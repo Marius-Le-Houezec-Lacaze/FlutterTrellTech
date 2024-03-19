@@ -2,6 +2,7 @@
 
 import 'package:trelltech/features/boards/data/clients/board_client.dart';
 import 'package:trelltech/features/boards/data/clients/dtos/board_creation_payload.dart';
+import 'package:trelltech/features/boards/data/clients/dtos/board_update_payload.dart';
 import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
 import 'package:trelltech/features/boards/domain/entities/complete_board.dart';
 import 'package:trelltech/features/boards/domain/entities/complete_list.dart';
@@ -112,6 +113,36 @@ class BoardServiceImpl implements BoardService {
     )).toList());
 
     return CompleteBoardEntity.fromBoardEntity(board, cards);
+  }
+
+  @override
+  Future<BoardEntity> deleteBoardById(String boardId) async {
+    var result = await _boardClient.deleteBoardById(boardId);
+
+    var board = result.getOrThrow();
+    return BoardEntity(
+      idOrganization: board.idOrganization,
+      idBoardSource: board.idBoardSource,
+      description: board.description,
+      id: board.id,
+      name: board.name,
+    );
+  }
+
+  @override
+  Future<BoardEntity> updateBoard(BoardEntity boardEntity) async {
+    var result = await _boardClient.updateBoard(BoardUpdatePayload(boardEntity.idOrganization!, boardEntity.name!, boardEntity.id!));
+
+    var res = result.getOrThrow();
+
+    return BoardEntity(
+      name: res.name,
+      id: res.id,
+      description: res.description,
+      idBoardSource: res.idBoardSource,
+      idOrganization: res.idOrganization,
+      backgroundImage: res.backgroundImage,
+    );
   }
 
 }

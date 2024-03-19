@@ -10,6 +10,9 @@ import 'package:trelltech/features/boards/domain/entities/list_entity.dart';
 import 'package:trelltech/features/boards/domain/services/board_service.dart';
 import 'package:trelltech/features/boards/presentation/pages/boards_index.dart';
 import 'package:trelltech/features/boards/presentation/widget/board_card.dart';
+import 'package:trelltech/features/boards/presentation/widget/card_form.dart';
+import 'package:trelltech/features/shared/domain/entities/card_entity.dart';
+import 'package:trelltech/features/shared/domain/services/card_service.dart';
 
 class BoardShow extends StatefulWidget {
   final BoardShowArgument argument;
@@ -22,6 +25,7 @@ class BoardShow extends StatefulWidget {
 
 class _BoardShowState extends State<BoardShow> {
   final BoardService boardService = sl<BoardService>();
+  final CardService cardService = sl<CardService>();
 
   final AppFlowyBoardController boardController = AppFlowyBoardController(
     onMoveGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
@@ -50,7 +54,7 @@ class _BoardShowState extends State<BoardShow> {
 
   _getBoard() async {
     var result =
-        await boardService.getCompleteBoardById(widget.argument.boardId);
+    await boardService.getCompleteBoardById(widget.argument.boardId);
     setState(() {
       board = result;
     });
@@ -106,6 +110,19 @@ class _BoardShowState extends State<BoardShow> {
                 controller: boardController,
                 boardScrollController: scrollCrontroller,
                 groupConstraints: const BoxConstraints.tightFor(width: 340),
+                footerBuilder: (context, groupData) =>
+                    ElevatedButton(onPressed: ()  {
+                      _showBottomSheet(CardEntity(id: null, desc: '', name: '', closed: false, idList: groupData.id), (CardEntity cardEntity) async {
+                          try {
+                            var card = await cardService.createCard(cardEntity);
+
+                          } catch(e){
+
+                          }
+
+                      });
+                    },
+                        child: const Text('Create new card')),
                 config: config,
                 cardBuilder: (context, groupData, item) {
                   return AppFlowyGroupCard(
@@ -115,5 +132,19 @@ class _BoardShowState extends State<BoardShow> {
                         item: item as BoardCard, key: ObjectKey(item)),
                   );
                 })));
+  }
+
+  _showBottomSheet(CardEntity cardEntity, Function(CardEntity cardEntity) onSubmitAction) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext context){
+          return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: CardForm(card: cardEntity,onSubmitAction: (card)=>{}),
+              ));
+        });
   }
 }

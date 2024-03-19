@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -8,15 +7,15 @@ import 'package:trelltech/features/organization/domain/services/organization_ser
 import 'package:trelltech/features/shared/domain/entities/organization_entity.dart';
 
 class OrganizationListElement extends StatelessWidget {
-
   void Function() getOrganizations;
-  void Function(OrganizationEntity organizationEntity,Function(OrganizationEntity) onSubmitAction) showBottomSheet;
+  void Function(OrganizationEntity organizationEntity,
+      Function(OrganizationEntity) onSubmitAction) showBottomSheet;
 
   OrganizationEntity organizationEntity;
 
-
-  OrganizationListElement(this.organizationEntity, this.getOrganizations,this.showBottomSheet, {super.key});
-
+  OrganizationListElement(
+      this.organizationEntity, this.getOrganizations, this.showBottomSheet,
+      {super.key});
 
   final OrganizationService _organizationService = sl<OrganizationService>();
 
@@ -54,8 +53,9 @@ class OrganizationListElement extends StatelessWidget {
     return [
       SlidableAction(
         onPressed: (BuildContext context) async {
-          var result = await _organizationService.deleteOrganization(organizationEntity.id!);
-          if(result.isSuccess()){
+          var result = await _organizationService
+              .deleteOrganization(organizationEntity.id!);
+          if (result.isSuccess()) {
             getOrganizations();
           }
         },
@@ -66,7 +66,7 @@ class OrganizationListElement extends StatelessWidget {
         label: 'Delete',
       ),
       SlidableAction(
-        onPressed: (BuildContext context){
+        onPressed: (BuildContext context) {
           showBottomSheet(organizationEntity, (organizationEntity) async {
             await _organizationService.updateOrganization(organizationEntity);
             getOrganizations();
@@ -76,7 +76,6 @@ class OrganizationListElement extends StatelessWidget {
         borderRadius: BorderRadius.only(topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
         foregroundColor: Colors.white,
         icon: Icons.edit,
-
         label: 'Edit',
       ),
     ];

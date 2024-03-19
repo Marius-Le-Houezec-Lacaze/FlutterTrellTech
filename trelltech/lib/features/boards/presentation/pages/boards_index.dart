@@ -65,7 +65,7 @@ class _BoardsState extends State<Boards> {
             padding: const EdgeInsets.all(8),
             itemCount: listBoard.data!.length,
             itemBuilder: (BuildContext context, int index) {
-              return BoardListElement(listBoard.data![index]);
+              return BoardListElement(listBoard.data![index], _showBottomSheet);
             }
         );
       }
