@@ -8,7 +8,7 @@ import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
 import 'package:trelltech/features/boards/domain/entities/complete_board.dart';
 import 'package:trelltech/features/boards/domain/entities/list_entity.dart';
 import 'package:trelltech/features/boards/domain/services/board_service.dart';
-import 'package:trelltech/features/boards/presentation/pages/boards.dart';
+import 'package:trelltech/features/boards/presentation/pages/boards_index.dart';
 import 'package:trelltech/features/boards/presentation/widget/board_card.dart';
 
 class BoardShow extends StatefulWidget {
@@ -72,14 +72,25 @@ class _BoardShowState extends State<BoardShow> {
 
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white70),
+            onPressed: () {
+              Navigator.of(context)
+                  .pop(); // Action pour retourner à la page précédente
+            },
+          ),
           title: Text(
             board.name!,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 25,
+            ),
           ),
           backgroundColor: Colors.black87,
+          centerTitle: true, // Centre le titre de l'AppBar
         ),
         body: Container(
-            padding: EdgeInsets.fromLTRB(0, 16, 0, 10),
+            padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
             decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
@@ -87,10 +98,14 @@ class _BoardShowState extends State<BoardShow> {
                       board.backgroundImage!,
                     ))),
             child: AppFlowyBoard(
+                headerBuilder: (context, groupData) => Text(
+                      groupData.headerData.groupName,
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      textAlign: TextAlign.left,
+                    ),
                 controller: boardController,
                 boardScrollController: scrollCrontroller,
                 groupConstraints: const BoxConstraints.tightFor(width: 340),
-
                 config: config,
                 cardBuilder: (context, groupData, item) {
                   return AppFlowyGroupCard(

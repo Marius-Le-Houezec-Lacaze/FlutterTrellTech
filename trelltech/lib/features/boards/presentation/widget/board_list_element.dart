@@ -15,7 +15,6 @@ class BoardListElement extends StatelessWidget{
     return Slidable(
         direction: Axis.horizontal,
         endActionPane:  const ActionPane(
-
           motion: ScrollMotion(),
           children: [
             // ..._buildActions(),

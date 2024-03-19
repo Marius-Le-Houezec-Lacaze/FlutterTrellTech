@@ -10,7 +10,6 @@ class RowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         color: Color.fromRGBO(37, 35, 43, 1),
-
         child: Align(
           alignment: Alignment.centerLeft,
           child: Padding(

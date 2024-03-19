@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trelltech/features/auth/presentation/pages/auth.dart';
-import 'package:trelltech/features/boards/presentation/pages/boards.dart';
+import 'package:trelltech/features/boards/presentation/pages/boards_index.dart';
 import 'package:trelltech/features/organization/presentation/pages/organization.dart';
 import 'package:trelltech/features/shared/presentation/pages/app.dart';
 
