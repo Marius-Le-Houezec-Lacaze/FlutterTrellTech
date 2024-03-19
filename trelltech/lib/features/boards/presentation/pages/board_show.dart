@@ -1,5 +1,3 @@
-
-
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:flutter/material.dart';
 import 'package:trelltech/container.dart';
@@ -10,9 +8,10 @@ import 'package:trelltech/features/boards/domain/entities/list_entity.dart';
 import 'package:trelltech/features/boards/domain/services/board_service.dart';
 import 'package:trelltech/features/boards/presentation/widget/board_card.dart';
 
-class BoardShow extends StatefulWidget{
+class BoardShow extends StatefulWidget {
   final BoardShowArgument argument;
-  const BoardShow(this. argument, {super.key});
+
+  const BoardShow(this.argument, {super.key});
 
   @override
   State<BoardShow> createState() => _BoardShowState();
@@ -33,7 +32,7 @@ class _BoardShowState extends State<BoardShow> {
     },
   );
 
-  late Future<CompleteBoardEntity> board;
+  late CompleteBoardEntity board;
   late AppFlowyBoardScrollController scrollCrontroller;
 
   late List<ListEntity> lists;
@@ -43,21 +42,20 @@ class _BoardShowState extends State<BoardShow> {
     scrollCrontroller = AppFlowyBoardScrollController();
     _getBoard();
 
-
-
     super.initState();
   }
 
-  _getBoard()async {
-    var result = await boardService.
-    getCompleteBoardById(widget.argument.boardId);
-    setState(()  {
-      board = boardService.getCompleteBoardById(widget.argument.boardId);
+  _getBoard() async {
+    var result =
+        await boardService.getCompleteBoardById(widget.argument.boardId);
+    setState(() {
+      board = result;
     });
 
     for (var element in result.lists!) {
-      var cards = element.cards?.map((e) =>BoardCard(e.name!)).toList();
-      final groupData = AppFlowyGroupData(id: element.id!, items: cards!, name: element.name!);
+      var cards = element.cards?.map((e) => BoardCard(e.name!)).toList();
+      final groupData = AppFlowyGroupData(
+          id: element.id!, items: cards!, name: element.name!);
       boardController.addGroup(groupData);
     }
   }
@@ -65,20 +63,25 @@ class _BoardShowState extends State<BoardShow> {
   @override
   Widget build(BuildContext context) {
     final config = AppFlowyBoardConfig(
-      groupBackgroundColor: Colors.deepOrangeAccent,
+      groupBackgroundColor: Colors.black,
       stretchGroupHeight: false,
     );
 
-    return AppFlowyBoard(controller: boardController,
+    return AppFlowyBoard(
+        controller: boardController,
+        background: Image.network(
+          board.backgroundImage!,
+          fit: BoxFit.fill,
+        ),
         boardScrollController: scrollCrontroller,
         groupConstraints: const BoxConstraints.tightFor(width: 240),
         config: config,
         cardBuilder: (context, groupData, item) {
-      return AppFlowyGroupCard(
-        key: ValueKey(item.id),
-        child:    RowWidget(
-      item: item as BoardCard, key: ObjectKey(item)),
-    );
-  });
+          return AppFlowyGroupCard(
+            decoration: BoxDecoration(color: Colors.transparent),
+            key: ValueKey(item.id),
+            child: RowWidget(item: item as BoardCard, key: ObjectKey(item)),
+          );
+        });
   }
 }

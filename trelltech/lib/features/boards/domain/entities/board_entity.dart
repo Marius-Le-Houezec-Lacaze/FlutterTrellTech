@@ -12,5 +12,7 @@ class BoardEntity {
 
   String ? idOrganization;
 
-  BoardEntity({this.name, this.description, this.id, this.idBoardSource, this.idOrganization});
+  String ? backgroundImage;
+
+  BoardEntity({this.backgroundImage, this.name, this.description, this.id, this.idBoardSource, this.idOrganization});
 }

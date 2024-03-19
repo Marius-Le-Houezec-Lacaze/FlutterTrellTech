@@ -83,6 +83,7 @@ class BoardServiceImpl implements BoardService {
       description: result.description,
       idBoardSource: result.idBoardSource,
       idOrganization: result.idOrganization,
+      backgroundImage: result.backgroundImage
     );
   }
 

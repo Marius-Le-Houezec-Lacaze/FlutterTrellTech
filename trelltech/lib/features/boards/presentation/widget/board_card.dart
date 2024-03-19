@@ -3,16 +3,24 @@ import 'package:flutter/material.dart';
 
 class RowWidget extends StatelessWidget {
   final BoardCard item;
+
   const RowWidget({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: ObjectKey(item),
-      height: 60,
-      color: Colors.green,
-      child: Center(child: Text(item.s)),
-    );
+    return Card(
+        color: Color.fromRGBO(37, 35, 43, 1),
+
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: Text(
+              item.s,
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+          ),
+        ));
   }
 }
 

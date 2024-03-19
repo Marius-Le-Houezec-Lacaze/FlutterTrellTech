@@ -7,10 +7,12 @@ class BoardDto {
   final String ? description;
   final String ? idBoardSource;
   final String ? idOrganization;
+  final String ? backgroundImage;
 
-  BoardDto(this.name, this.description,this.idBoardSource,this.idOrganization, {required this.id});
+  BoardDto(this.backgroundImage, this.name, this.description,this.idBoardSource,this.idOrganization, {required this.id});
 
   static fromJson(Map<String, dynamic> json) => BoardDto(
+    json['prefs']['backgroundImage'] ?? "",
     json['name'] ?? "",
     json['description'] ?? "",
     json['idBoardSource'] ?? "",
