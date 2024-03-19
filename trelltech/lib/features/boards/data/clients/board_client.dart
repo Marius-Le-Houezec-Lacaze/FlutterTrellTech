@@ -3,6 +3,7 @@ import 'package:result_dart/result_dart.dart';
 import 'package:trelltech/config/constant.dart';
 import 'package:trelltech/features/boards/data/clients/dtos/board_creation_payload.dart';
 import 'package:trelltech/features/boards/data/clients/dtos/board_dto.dart';
+import 'package:trelltech/features/boards/data/clients/dtos/board_update_payload.dart';
 import 'package:trelltech/features/boards/data/clients/dtos/list_dto.dart';
 
 
@@ -68,10 +69,31 @@ class BoardsClient {
 
   Future<Result<List<ListDto>, DioException>> getListsByBoardId (String boardId) async {
     try {
-      final result = await _dio.get<List<dynamic>>('$url/boards/$boardId/lists');
+      final result = await _dio.get<List<dynamic>>('${url}boards/$boardId/lists');
 
       return Success(result.data!.map<ListDto>((e) => ListDto.fromJson(e)).toList());
     } on DioException catch (e){
+      return Failure(e);
+    }
+  }
+
+  Future<Result<BoardDto, DioException>> deleteBoardById(String boardId) async {
+    try {
+      final result = await _dio.delete('${url}boards/$boardId');
+
+      return Success(BoardDto.fromJson(result.data));
+    } on DioException catch(e){
+      return Failure(e);
+    }
+  }
+
+  Future<Result<BoardDto, DioException>> updateBoard(BoardUpdatePayload boardUpdatePayload) async {
+    var id = boardUpdatePayload.id;
+    try{
+      final result = await _dio.put('${url}boards/$id', data: boardUpdatePayload.toJson());
+
+      return Success(BoardDto.fromJson(result.data));
+    } on DioException catch(e){
       return Failure(e);
     }
   }

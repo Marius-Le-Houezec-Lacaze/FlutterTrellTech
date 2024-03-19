@@ -10,5 +10,8 @@ abstract class BoardService {
   Future<BoardEntity> getBoardByIdAsync(String boardId);
   Future<List<ListEntity>> getListsByBoardId(String boardId);
   Future<CompleteBoardEntity> getCompleteBoardById(String boardId);
+
+  Future<BoardEntity> updateBoard(BoardEntity boardEntity);
+  Future<BoardEntity> deleteBoardById(String boardId);
 }
 

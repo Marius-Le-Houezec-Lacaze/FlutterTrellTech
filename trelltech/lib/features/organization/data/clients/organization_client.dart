@@ -42,6 +42,5 @@ class OrganizationClient {
     } on DioException catch(e){
       return Failure(e);
     }
-
   }
 }

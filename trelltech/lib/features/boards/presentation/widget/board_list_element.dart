@@ -1,24 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:trelltech/container.dart';
 import 'package:trelltech/features/boards/domain/arguments/board_show_argument.dart';
 import 'package:trelltech/features/boards/domain/entities/board_entity.dart';
+import 'package:trelltech/features/boards/domain/services/board_service.dart';
 
-class BoardListElement extends StatelessWidget{
+class BoardListElement extends StatefulWidget{
   BoardEntity boardEntity;
 
-  BoardListElement(this.boardEntity, {super.key});
+  Function(BoardEntity boardEntity, Function(BoardEntity p1) onSubmitAction) showBottomSheet;
 
+  BoardListElement(this.boardEntity, this.showBottomSheet, {super.key});
+
+  @override
+  State<BoardListElement> createState() => _BoardListElementState();
+}
+
+class _BoardListElementState extends State<BoardListElement> {
+
+  final BoardService _boardService = sl<BoardService>();
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
         direction: Axis.horizontal,
-        endActionPane:  const ActionPane(
+        endActionPane:   ActionPane(
 
-          motion: ScrollMotion(),
+          motion: const ScrollMotion(),
           children: [
-            // ..._buildActions(),
+            ..._buildActions(),
           ],
         ),
         child: AnimatedContainer(
@@ -28,13 +39,42 @@ class BoardListElement extends StatelessWidget{
               color:Theme.of(context).colorScheme.primary,
               child: InkWell(
                 onTap: (){
-                  Navigator.pushNamed(context, "/boardshow", arguments: BoardShowArgument(boardEntity.id!));
+                  Navigator.pushNamed(context, "/boardshow", arguments: BoardShowArgument(widget.boardEntity.id!));
                 },
-                child: Center(child: Text('Entry ${boardEntity.name}')),
+                child: Center(child: Text('Entry ${widget.boardEntity.name}')),
               ),
             )
         )
     );
   }
 
+  List<SlidableAction> _buildActions() {
+    return [
+      SlidableAction(
+        onPressed: (BuildContext context) async {
+          var result = await _boardService
+              .deleteBoardById(widget.boardEntity.id!);
+          // if (result.isSuccess()) {
+          //   // getOrganizations();
+          // }
+        },
+        backgroundColor: const Color(0xFFFE4A49),
+        foregroundColor: Colors.white,
+        icon: Icons.delete,
+        label: 'Delete',
+      ),
+      SlidableAction(
+        onPressed: (BuildContext context) {
+          widget.showBottomSheet(widget.boardEntity, (boardEntity) async {
+            await _boardService.updateBoard(boardEntity);
+            // getOrganizations();
+          });
+        },
+        backgroundColor: const Color(0xFF21B7CA),
+        foregroundColor: Colors.white,
+        icon: Icons.edit,
+        label: 'Edit',
+      ),
+    ];
+  }
 }
