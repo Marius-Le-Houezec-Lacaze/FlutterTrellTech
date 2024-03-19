@@ -75,7 +75,7 @@ class _MemberClient implements MemberClient {
               baseUrl,
             ))));
     var value = _result.data!
-        .map<OrganizationDto>((dynamic i) => OrganizationDto.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => OrganizationDto.fromJson(i as Map<String, OrganizationDto>))
         .toList();
     return value;
   }
