@@ -23,29 +23,37 @@ class _BoardListElementState extends State<BoardListElement> {
 
   @override
   Widget build(BuildContext context) {
-    return Slidable(
-        direction: Axis.horizontal,
-        endActionPane:   ActionPane(
-
-          motion: const ScrollMotion(),
-          children: [
-            ..._buildActions(),
-          ],
-        ),
-        child: AnimatedContainer(
-            height: 60,
-            duration: const Duration(seconds:2),
-            child: Material(
-              color:Theme.of(context).colorScheme.primary,
-              child: InkWell(
-                onTap: (){
-                  Navigator.pushNamed(context, "/boardshow", arguments: BoardShowArgument(widget.boardEntity.id!));
-                },
-                child: Center(child: Text('Entry ${widget.boardEntity.name}')),
-              ),
-            )
-        )
-    );
+    return Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: Slidable(
+            direction: Axis.horizontal,
+            endActionPane: const ActionPane(
+              motion: ScrollMotion(),
+              children: [
+                ..._buildActions(),
+              ],
+            ),
+            child: AnimatedContainer(
+                height: 60,
+                duration: const Duration(seconds: 2),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, "/boardshow",
+                          arguments: BoardShowArgument(boardEntity.id!));
+                    },
+                    child: Center(
+                        child: Text(
+                      'Entry ${boardEntity.name}',
+                      style: TextStyle(color: Colors.white),
+                    )),
+                  ),
+                ))));
   }
 
   List<SlidableAction> _buildActions() {
@@ -77,4 +85,5 @@ class _BoardListElementState extends State<BoardListElement> {
       ),
     ];
   }
+
 }

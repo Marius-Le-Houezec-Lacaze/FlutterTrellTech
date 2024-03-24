@@ -37,6 +37,24 @@ class _BoardsState extends State<Boards> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white70),
+          onPressed: () {
+            Navigator.of(context)
+                .pop(); // Action pour retourner à la page précédente
+          },
+        ),
+        title: const Text(
+          "Mes boards",
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 25,
+          ),
+        ),
+        backgroundColor: Colors.black87,
+        centerTitle: true, // Centre le titre de l'AppBar
+      ),
       floatingActionButton: _buildFloatingButton(context),
       body: FutureBuilder(future: _boards, builder: (BuildContext context, AsyncSnapshot<List<BoardEntity>> listBoard) {
         if (!listBoard.hasData) {

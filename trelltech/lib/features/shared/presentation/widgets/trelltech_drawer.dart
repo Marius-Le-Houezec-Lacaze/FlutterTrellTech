@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trelltech/features/boards/presentation/pages/boards.dart';
+import 'package:trelltech/features/boards/presentation/pages/boards_index.dart';
 import 'package:trelltech/features/organization/presentation/pages/organization.dart';
 import 'package:trelltech/features/shared/domain/entities/list_burger_menu.dart';
 
