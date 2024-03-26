@@ -27,7 +27,7 @@ class _BoardListElementState extends State<BoardListElement> {
         padding: EdgeInsets.symmetric(vertical: 4),
         child: Slidable(
             direction: Axis.horizontal,
-            endActionPane: const ActionPane(
+            endActionPane:  ActionPane(
               motion: ScrollMotion(),
               children: [
                 ..._buildActions(),
@@ -45,11 +45,11 @@ class _BoardListElementState extends State<BoardListElement> {
                   child: InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, "/boardshow",
-                          arguments: BoardShowArgument(boardEntity.id!));
+                          arguments: BoardShowArgument(widget.boardEntity.id!));
                     },
                     child: Center(
                         child: Text(
-                      'Entry ${boardEntity.name}',
+                      'Entry ${widget.boardEntity.name}',
                       style: TextStyle(color: Colors.white),
                     )),
                   ),
